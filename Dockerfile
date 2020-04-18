@@ -8,4 +8,4 @@ RUN pip install -r /opt/mycroft/mycroft-precise/requirements/test.txt
 RUN pip install -r /opt/mycroft/mycroft-precise/requirements/prod.txt
 COPY . /opt/mycroft/mycroft-precise
 WORKDIR /opt/mycroft/mycroft-precise
-ENTRYPOINT ["pytest", "--alluredir", "/root/allure/allure-result"]
+ENTRYPOINT ["pytest"]
