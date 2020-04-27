@@ -27,7 +27,7 @@ pipeline {
             steps {
                 sh 'docker build \
                     --build-arg github_api_key=$GITHUB_PSW \
-                    --file test/Dockerfile \
+                    --file ../test/Dockerfile \
                     --target code-checker \
                     -t precise:${BRANCH_ALIAS} .'
                 sh 'docker run precise:${BRANCH_ALIAS}'
