@@ -27,6 +27,6 @@ RUN pipenv install
 ENTRYPOINT ["pipenv", "run", "python","-m", "pipeline.code_check", "--repository", "mycroft-precise", "--pull-request", "PR-149"]
 
 # Run the tests defined in the precise repository
-FROM build as test-runner
+FROM precise-build as test-runner
 WORKDIR /opt/mycroft/mycroft-precise
 ENTRYPOINT ["pytest"]

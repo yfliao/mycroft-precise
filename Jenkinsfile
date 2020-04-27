@@ -27,6 +27,7 @@ pipeline {
             steps {
                 sh 'docker build \
                     --build-arg github_api_key=$GITHUB_PSW \
+                    --file test/Dockerfile \
                     --target code-checker \
                     -t precise:${BRANCH_ALIAS} .'
                 sh 'docker run precise:${BRANCH_ALIAS}'
@@ -43,7 +44,11 @@ pipeline {
             }
             steps {
                 echo 'Building Precise Testing Docker Image'
-                sh 'docker build --target test-runner -t precise:${BRANCH_ALIAS} .'
+                sh 'docker build \
+                    --build-arg github_api_key=$GITHUB_PSW \
+                    --file test/Dockerfile \
+                    --target test-runner \
+                    -t precise:${BRANCH_ALIAS} .'
                 echo 'Precise Test Suite'
                 timeout(time: 5, unit: 'MINUTES')
                 {
