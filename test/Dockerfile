@@ -7,11 +7,11 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get -y install git python3-scipy cython libhdf5-dev python3-h5py portaudio19-dev swig libpulse-dev libatlas-base-dev
 RUN mkdir -p /root/allure /opt/mycroft/mycroft-precise /root/code-quality
 WORKDIR /opt/mycroft
-COPY ../requirements/test.txt mycroft-precise/requirements/
+COPY requirements/test.txt mycroft-precise/requirements/
 RUN pip install -r mycroft-precise/requirements/test.txt
-COPY ../requirements/prod.txt mycroft-precise/requirements/
+COPY requirements/prod.txt mycroft-precise/requirements/
 RUN pip install -r mycroft-precise/requirements/prod.txt
-COPY .. mycroft-precise
+COPY . mycroft-precise
 
 # Clone the devops repository, which contiains helper scripts for some continuous
 # integraion tasks. Run the code_check.py script which performs linting (using PyLint)
