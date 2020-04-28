@@ -58,9 +58,34 @@ pipeline {
                 }
             }
         }
+        stage('Build and upload snap package') {
+            when {
+                anyOf {
+                    branch 'dev'
+                    branch 'release/*'
+                }
+            }
+            steps {
+                echo 'Building snap package...'
+                sh 'docker build -f ~/snapcraft-docker/Dockerfile -t \
+                    snapcraft-build .'
+                sh 'docker run  -v "${PWD}":/build -w /build \
+                    snapcraft-build:latest snapcraft'
+                //echo 'Pushing package to snap store'
+                //sh 'docker run  -v "${PWD}":/build -w /build \
+                //    snapcraft-build:latest snapcraft push --release edge *.snap
+            }
+        }
     }
     post {
         cleanup {
+            sh(
+                label: 'Snapcraft Cleanup',
+                script: '''
+                    docker run  -v "${PWD}":/build -w /build \
+                        snapcraft-build:latest snapcraft clean
+                    '''
+            )
             sh(
                 label: 'Docker Container and Image Cleanup',
                 script: '''
