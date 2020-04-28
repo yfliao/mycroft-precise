@@ -63,6 +63,7 @@ pipeline {
                 anyOf {
                     branch 'dev'
                     branch 'release/*'
+                    branch 'feature/continous-deployment'
                 }
             }
             steps {
